@@ -157,8 +157,12 @@ class SoftDeleteObject(models.Model):
     deleted = property(get_deleted, set_deleted)
 
     def _do_delete(self, changeset, related):
-        rel = getattr(self, related.get_accessor_name())
+        try:
+            related_accessor = related.get_accessor_name()
+        except:
+            return
 
+        rel = getattr(self, related_accessor)
         if not rel:
             return
 
