@@ -159,10 +159,10 @@ class SoftDeleteObject(models.Model):
     def _do_delete(self, changeset, related):
         try:
             related_accessor = related.get_accessor_name()
+            rel = getattr(self, related_accessor)
         except:
             return
 
-        rel = getattr(self, related_accessor)
         if not rel:
             return
 
